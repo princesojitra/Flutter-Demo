@@ -17,12 +17,12 @@ class _DashboardState extends State<Dashboard> {
         title: Text('Dashboard'),
         elevation: 10.0,
         brightness: Brightness.light,
-        bottom: PreferredSize(
-            child: Icon(
-              Icons.linear_scale,
-              size: 60.0,
-            ),
-            preferredSize: Size.fromHeight(50.0)),
+//        bottom: PreferredSize(
+//            child: Icon(
+//              Icons.linear_scale,
+//              size: 60.0,
+//            ),
+//            preferredSize: Size.fromHeight(50.0)),
         leading: GestureDetector(
           child: Icon(Icons.menu),
           onTap: () {

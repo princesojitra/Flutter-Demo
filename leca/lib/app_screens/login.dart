@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:leca/models/login_model.dart';
+import 'package:leca/models/login_serialize.dart';
 import 'package:leca/app_screens/forgot_password.dart';
 import 'package:leca/utils/constants.dart';
 import 'package:leca/app_screens/dashboard.dart';
@@ -42,9 +42,15 @@ class __Loginstate extends State<Login> {
 
     callLoginWS() async {
       try {
-        final loginResponse = await LoginModel.fetchLoginData(
+        final loginResponse = await Login_Model.fetchLoginData(
             email: emailTextEditController.text,
             password: passwordTextEditController.text);
+
+        print(loginResponse.toJson());
+        Login_Model loginResponsae =
+        await Login_Model.fromJson(SharedPref.read('UserLogin'));
+        print(loginResponsae.toJson());
+
         if (loginResponse.status == 200) {
           SharedPref.save('UserLogin', loginResponse);
 

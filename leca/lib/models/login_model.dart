@@ -1,8 +1,9 @@
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter_launcher_name/constants.dart';
 import 'package:leca/utils/constants.dart';
+
+
 
 class LoginModel {
   int _status;
@@ -24,6 +25,8 @@ class LoginModel {
   set message(String message) => _message = message;
 
   set data(LoginData data) => _data = data;
+
+
 
   //FromJson
 
@@ -48,13 +51,11 @@ class LoginModel {
 
   static Future<LoginModel> fetchLoginData(
       {String email, String password}) async {
-
     var body = Map<String, dynamic>();
     body[LoginWsParms.email] = email;
     body[LoginWsParms.devicetype] = '1';
     body[LoginWsParms.devicetoken] = 'FCMKey';
     body[LoginWsParms.password] = password;
-
 
     final result = await http.post(Constants.BaseUrl + WS.Login, body: body);
 
