@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+import 'dart:async';
 
 class Constants {
   static final BaseUrl =
-      'http://php.dev.drcsystems.ooo:8083/php-projects/leca/api/v1/webservices/';
+      'http://php.dev.drcsystems.ooo:8083/php-projects/leca/api/v1/webservic/';
 
   static showAlert(
       String message, String title, BuildContext context, bool isPop) {
@@ -33,16 +34,19 @@ class Constants {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     FlatButton(
-                        child: Text(
-                          'OK',
-                          style: TextStyle(fontSize: 17.0, color: Colors.blue),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          if (isPop) {
-                            Navigator.pop(context);
-                          }
-                        }),
+                      child: Text(
+                        'OK',
+                        style: TextStyle(fontSize: 17.0, color: Colors.blue),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        if (isPop) {
+                          Navigator.pop(context);
+                        }
+                      },
+                      highlightColor: Colors.white,
+                      splashColor: Colors.white,
+                    ),
                   ])),
         ],
       ),
@@ -58,7 +62,7 @@ class Constants {
 }
 
 class SharedPref {
- static read(String key) async {
+  static read(String key) async {
     final prefs = await SharedPreferences.getInstance();
     return json.decode(prefs.getString(key));
   }
@@ -68,7 +72,7 @@ class SharedPref {
     prefs.setString(key, json.encode(value));
   }
 
- static remove(String key) async {
+  static remove(String key) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(key);
   }

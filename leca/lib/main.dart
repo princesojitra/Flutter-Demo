@@ -9,9 +9,9 @@ import 'utils/constants.dart';
 void main() async {
   Widget _defaultHome = new Login();
   var _result = await loadLoginResponseFromSharedPrefe();
-  if (_result != null) {
-    _defaultHome = new Dashboard();
-  }
+//  if (_result != null) {
+//    _defaultHome = new Dashboard();
+//  }
   runApp(LecaApp(
     defaultHome: _defaultHome,
   ));
@@ -43,6 +43,7 @@ class LecaApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'LECA',
       theme: ThemeData(
+        accentColor: Colors.lightGreen,
           primaryColor: Colors.lightGreen,
           backgroundColor: Colors.white,
           scaffoldBackgroundColor: Colors.white,

@@ -30,6 +30,7 @@ dependencies:
   flutter_statusbarcolor: ^0.2.3
   shared_preferences: any
   json_annotation: ^3.0.1
+  modal_progress_hud: ^0.1.3
 
 flutter_icons:
   android: true
