@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:leca/models/login_serialize.dart';
+import 'package:leca/utils/sidemenu.dart';
+import 'package:leca/models/sidemenu_model.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -9,6 +12,17 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+//  MenuItem _selectedMenuItem;
+//  List<MenuItem> _menuItems;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+//    _menuItems = SideMenu.createMenuList();
+//    _selectedMenuItem = _menuItems.first;
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -23,14 +37,18 @@ class _DashboardState extends State<Dashboard> {
 //              size: 60.0,
 //            ),
 //            preferredSize: Size.fromHeight(50.0)),
-        leading: GestureDetector(
-          child: Icon(Icons.menu),
-          onTap: () {
-            print('menu drawer tapoped');
-          },
-        ),
+//        leading: GestureDetector(
+//          child: Icon(Icons.menu),
+//          onTap: () {
+//            print('menu drawer tapoped');
+//          },
+//        ),
       ),
       body: Container(),
+      drawer: new Drawer(
+          child: SideMenu()),
     );
   }
+
+
 }

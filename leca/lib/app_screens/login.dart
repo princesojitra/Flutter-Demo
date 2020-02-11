@@ -84,6 +84,7 @@ class __Loginstate extends State<Login> {
     // TODO: implement build
     return ModalProgressHUD(
         inAsyncCall: _isLodaing,
+        opacity: 0.0,
         progressIndicator: CircularProgressIndicator(),
         child: Form(
           key: _formKey,

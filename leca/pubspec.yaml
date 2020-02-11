@@ -65,6 +65,16 @@ flutter:
     - assests/email.png
     - assests/password.png
     - assests/backarow.png
+    - assests/dashboard.png
+    - assests/About.png
+    - assests/consultant.png
+    - assests/contactus.png
+    - assests/feedback.png
+    - assests/logout.png
+    - assests/media.png
+    - assests/notification.png
+    - assests/sales.png
+    - assests/tc.png
 
 
 
