@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:leca/app_screens/dashboard.dart';
 import 'package:leca/app_screens/login.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
-import 'models/login_serialize.dart';
+import 'models/serialize/login_serialize.dart';
 import 'dart:async';
 import 'utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -65,8 +65,8 @@ class LecaApp extends StatelessWidget {
       home: Scaffold(body: defaultHome),
       routes: <String, WidgetBuilder>{
         // Set routes for using the Navigator.
-        '/dashboard': (BuildContext context) => new Dashboard(),
-        '/login': (BuildContext context) => new Login()
+        '/login': (BuildContext context) => new Login(),
+        '/dashboard': (BuildContext context) => new Dashboard()
       },
     );
   }

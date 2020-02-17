@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:leca/models/forgot_password_model.dart';
+import 'package:leca/models/forgotpassword_model.dart';
 import 'package:leca/utils/constants.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
@@ -15,38 +15,49 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPassword> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController emailTextEditController = TextEditingController();
+  TextEditingController _emailTextEditController = TextEditingController();
   bool _isEmailAutoValidate;
-  bool _isLaoding;
+  bool _isLoading;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _isEmailAutoValidate = false;
-    _isLaoding = false;
+    _isLoading = false;
   }
 
   _CallForgotPasswordWS() async {
     try {
       final result = await ForgotPasswordModel.fetchResetPasswordData(
-          emailTextEditController.text);
+          _emailTextEditController.text);
       if (result.status == 200) {
-        Constants.showAlert(result.message, 'LECA', context, true);
+        Constants.showAlert(
+            title: Constants.AppName,
+            context: context,
+            message: result.message,
+            isPop: true);
+
         setState(() {
-          _isLaoding = true;
+          _isLoading = true;
         });
       } else {
-        Constants.showAlert(result.message, 'LECA', context, false);
+        Constants.showAlert(
+            title: Constants.AppName,
+            context: context,
+            message: result.message);
         setState(() {
-          _isLaoding = false;
+          _isLoading = false;
         });
       }
     } catch (error) {
       print(error.toString());
-      Constants.showAlert(error.toString(), 'LECA', context, false);
+      Constants.showAlert(
+          title: Constants.AppName,
+          context: context,
+          message: error.toString());
       setState(() {
-        _isLaoding = false;
+        _isLoading = false;
       });
     }
   }
@@ -58,7 +69,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     // TODO: implement build
     return Scaffold(
         body: ModalProgressHUD(
-            inAsyncCall: _isLaoding,
+            inAsyncCall: _isLoading,
             opacity: 0.0,
             child: Form(
               key: _formKey,
@@ -94,12 +105,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         style: textStyle,
                         validator: (updatedValue) {
                           if (updatedValue.isEmpty) {
-                            return 'Email can not be empty';
+                            return Constants.VALIDATE_EmailEmpty;
                           } else if (!EmailValidator.validate(updatedValue)) {
-                            return 'Please enter valid email address';
+                            return Constants.VALIDATE_Email;
                           }
+                          return '';
                         },
-                        controller: emailTextEditController,
+                        controller: _emailTextEditController,
                         decoration: InputDecoration(
                             hintText: 'abc@gmail.com',
                             suffixIcon: Container(
@@ -129,7 +141,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               if (_formKey.currentState.validate()) {
                                 setState(() {
                                   print('reset button clicked');
-                                  _isLaoding = true;
+                                  _isLoading = true;
                                 });
                                 _CallForgotPasswordWS();
                               }

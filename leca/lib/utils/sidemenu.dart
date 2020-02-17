@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:leca/models/login_serialize.dart';
-import 'package:leca/models/sidemenu_model.dart';
-import 'package:leca/app_screens/dashboard.dart';
-import 'package:leca/app_screens/notification.dart';
-import 'constants.dart';
 
 class SideMenu extends StatefulWidget {
   final Function() notifyParent;

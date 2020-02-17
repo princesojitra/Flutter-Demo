@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:leca/utils/constants.dart';
 import 'package:leca/utils/sidemenu.dart';
 import 'package:leca/app_screens/dashboard.dart';
 import 'package:leca/app_screens/notification.dart';
-import 'package:leca/models/sidemenu_model.dart';
 
 class MainMenu extends StatefulWidget {
   @override
@@ -16,7 +16,7 @@ class _MainMenuState extends State<MainMenu> {
   GlobalKey<ScaffoldState> _key = new GlobalKey<ScaffoldState>();
   MenuItem _selectedMenuItem;
   List<MenuItem> _menuItems;
-  List<Widget> _menuOptionWidgets = [];
+  List<Widget> _menuOptionWidgets;
   String _profilePic;
   String _appBarTitle;
 
@@ -58,13 +58,38 @@ class _MainMenuState extends State<MainMenu> {
   }
 
   _onSelectItem(MenuItem menuItem) {
+    MenuItem _previousSelectedMenuIem = _selectedMenuItem;
+
     setState(() {
       _selectedMenuItem = menuItem;
       _appBarTitle = menuItem.title;
 
     });
 
-    Navigator.of(context).pop();
+    if (menuItem.title == 'Logout') {
+      Constants.showAlert(
+          title: Constants.AppName,
+          context: context,
+          message: Constants.ALERT_LogOut,
+          isPop: false,
+          isTwoButton: true,
+          firstBtnTitle: 'No',
+          secondBtnTitle: 'Yes',secondBtnAction: (){
+           //pop to login screen
+        Navigator.of(context).pushNamedAndRemoveUntil('/dashboard', (Route<dynamic> route) => false);
+        //Navigator.popUntil(context, ModalRoute.withName('/login'));
+      },firstBtnAction: (){
+        setState(() {
+          _selectedMenuItem = _previousSelectedMenuIem;
+          _appBarTitle = _previousSelectedMenuIem.title;
+        });
+        Navigator.of(context).pop();
+      });
+    }
+    else{
+      Navigator.of(context).pop();
+    }
+
   }
 
   List<MenuItem> createMenuList() {
@@ -167,4 +192,13 @@ class _MainMenuState extends State<MainMenu> {
     }
     return menuWidgets;
   }
+}
+
+class MenuItem {
+  String title;
+  String image;
+  Color color;
+  Function function;
+
+  MenuItem({this.title, this.image, this.color, this.function});
 }

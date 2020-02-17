@@ -9,7 +9,7 @@ class ForgotPasswordModel {
 
   ForgotPasswordModel(this._message, this._status);
 
-//getter
+  //getter
   int get status => _status;
 
   String get message => _message;

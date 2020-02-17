@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:leca/models/login_serialize.dart';
-import 'package:leca/app_screens/forgot_password.dart';
+import 'package:leca/models/serialize/login_serialize.dart';
+import 'package:leca/app_screens/forgotpassword.dart';
 import 'package:leca/utils/constants.dart';
 import 'package:leca/app_screens/mainmenu.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -11,20 +11,20 @@ class Login extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return __Loginstate();
+    return __LoginState();
   }
 }
 
-class __Loginstate extends State<Login> {
+class __LoginState extends State<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  TextEditingController emailTextEditController = TextEditingController();
-  TextEditingController passwordTextEditController = TextEditingController();
+  TextEditingController _emailTextEditController = TextEditingController();
+  TextEditingController _passwordTextEditController = TextEditingController();
 
   bool _isRememberMe;
   bool _autoValidateEmail;
   bool _autoValidatePassword;
-  bool _isLodaing;
+  bool _isLoading;
 
   @override
   void initState() {
@@ -33,9 +33,9 @@ class __Loginstate extends State<Login> {
     _isRememberMe = false;
     _autoValidateEmail = false;
     _autoValidatePassword = false;
-    _isLodaing = false;
-    emailTextEditController.text = 'cpconsultant@gmail.com';
-    passwordTextEditController.text = 'Drc@1234';
+    _isLoading = false;
+    _emailTextEditController.text = 'cpconsultant@gmail.com';
+    _passwordTextEditController.text = 'Drc@1234';
   }
 
   @override
@@ -43,18 +43,18 @@ class __Loginstate extends State<Login> {
     TextStyle textStyle = Theme.of(context).textTheme.title;
     double screenWidth = MediaQuery.of(context).size.width;
 
-    callLoginWS() async {
+    _callLoginWS() async {
       try {
         final loginResponse = await Login_Model.fetchLoginData(
-            email: emailTextEditController.text,
-            password: passwordTextEditController.text);
+            email: _emailTextEditController.text,
+            password: _passwordTextEditController.text);
 
         print(loginResponse.toJson());
 
         if (loginResponse.status == 200) {
           SharedPref.save('UserLogin', loginResponse);
           setState(() {
-            _isLodaing = false;
+            _isLoading = false;
           });
 
           Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -62,21 +62,27 @@ class __Loginstate extends State<Login> {
           }));
         } else {
           setState(() {
-            _isLodaing = false;
+            _isLoading = false;
           });
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return MainMenu();
           }));
-          Constants.showAlert(loginResponse.message, 'LECA', context, false);
+          Constants.showAlert(
+              title: Constants.AppName,
+              context: context,
+              message: loginResponse.message);
         }
       } catch (error) {
         setState(() {
-          _isLodaing = false;
+          _isLoading = false;
         });
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return MainMenu();
         }));
-        Constants.showAlert(error.toString(), 'LECA', context, false);
+        Constants.showAlert(
+            title: Constants.AppName,
+            context: context,
+            message: error.toString());
       }
     }
 
@@ -89,7 +95,7 @@ class __Loginstate extends State<Login> {
 
     // TODO: implement build
     return ModalProgressHUD(
-        inAsyncCall: _isLodaing,
+        inAsyncCall: _isLoading,
         opacity: 0.0,
         progressIndicator: CircularProgressIndicator(),
         child: Form(
@@ -112,13 +118,15 @@ class __Loginstate extends State<Login> {
                         autovalidate: _autoValidateEmail,
                         cursorColor: Colors.lightGreen,
                         keyboardType: TextInputType.emailAddress,
-                        controller: emailTextEditController,
+                        controller: _emailTextEditController,
                         style: textStyle,
-                        validator: (inputtring) {
-                          if (inputtring.isEmpty) {
-                            return 'Email can not be empty';
-                          } else if (!EmailValidator.validate(inputtring)) {
-                            return 'Please enter valid email address';
+                        validator: (inputString) {
+                          if (inputString.isEmpty) {
+                            return Constants.VALIDATE_EmailEmpty;
+                          } else if (!EmailValidator.validate(inputString)) {
+                            return Constants.VALIDATE_Email;
+                          } else {
+                            return null;
                           }
                         },
                         onChanged: (updatedValue) {
@@ -146,11 +154,13 @@ class __Loginstate extends State<Login> {
                         cursorColor: Colors.lightGreen,
                         autovalidate: _autoValidatePassword,
                         keyboardType: TextInputType.emailAddress,
-                        controller: passwordTextEditController,
+                        controller: _passwordTextEditController,
                         style: textStyle,
-                        validator: (inputtring) {
-                          if (inputtring.isEmpty) {
-                            return 'Password can not be empty';
+                        validator: (inputString) {
+                          if (inputString.isEmpty) {
+                            return Constants.VALIDATE_PasswordEmpty;
+                          } else {
+                            return null;
                           }
                         },
                         onChanged: (updatedValue) {
@@ -234,9 +244,9 @@ class __Loginstate extends State<Login> {
                               if (_formKey.currentState.validate()) {
                                 setState(() {
                                   print('all validations are checked');
-                                  _isLodaing = true;
+                                  _isLoading = true;
                                 });
-                                callLoginWS();
+                                _callLoginWS();
                               }
                             },
                             child: Text(
