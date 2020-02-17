@@ -4,7 +4,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:leca/models/login_serialize.dart';
 import 'package:leca/app_screens/forgot_password.dart';
 import 'package:leca/utils/constants.dart';
-import 'package:leca/app_screens/dashboard.dart';
+import 'package:leca/app_screens/mainmenu.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class Login extends StatefulWidget {
@@ -58,18 +58,24 @@ class __Loginstate extends State<Login> {
           });
 
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return Dashboard();
+            return MainMenu();
           }));
         } else {
           setState(() {
             _isLodaing = false;
           });
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return MainMenu();
+          }));
           Constants.showAlert(loginResponse.message, 'LECA', context, false);
         }
       } catch (error) {
         setState(() {
           _isLodaing = false;
         });
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return MainMenu();
+        }));
         Constants.showAlert(error.toString(), 'LECA', context, false);
       }
     }

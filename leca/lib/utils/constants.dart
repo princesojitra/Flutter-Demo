@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:leca/models/login_serialize.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:async';
+import 'package:leca/models/login_serialize.dart';
 
 class Constants {
   static final BaseUrl =
-      'http://php.dev.drcsystems.ooo:8083/php-projects/leca/api/v1/webservices/';
+      'http://php.dev.drcsystems.ooo/php-projects/leca/api/v1/webservices/';
 
   static showAlert(
       String message, String title, BuildContext context, bool isPop) {

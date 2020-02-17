@@ -5,12 +5,18 @@ import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'models/login_serialize.dart';
 import 'dart:async';
 import 'utils/constants.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 void main() async {
   Widget _defaultHome = new Login();
-  var _result = await loadLoginResponseFromSharedPrefe();
-//  if (_result != null) {
-//    _defaultHome = new Dashboard();
+
+//  final prefs = await SharedPreferences.getInstance();
+//  Login_Model loginResponse =
+//      Login_Model.fromJson(json.decode(prefs.getString('userLogin')));
+//
+//  var _result = await loadLoginResponseFromSharedPrefe();
+////  if (_result != null) {
+////    _defaultHome = new Dashboard();
 //  }
   runApp(LecaApp(
     defaultHome: _defaultHome,
