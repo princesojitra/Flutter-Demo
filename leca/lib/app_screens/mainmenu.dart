@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:leca/utils/constants.dart';
 import 'package:leca/utils/sidemenu.dart';
 import 'package:leca/app_screens/dashboard.dart';
-import 'package:leca/app_screens/notification.dart';
+import 'package:leca/app_screens/notifications.dart';
 
 class MainMenu extends StatefulWidget {
+  static const routeName = '/mainmenu';
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -63,7 +65,6 @@ class _MainMenuState extends State<MainMenu> {
     setState(() {
       _selectedMenuItem = menuItem;
       _appBarTitle = menuItem.title;
-
     });
 
     if (menuItem.title == 'Logout') {
@@ -74,22 +75,23 @@ class _MainMenuState extends State<MainMenu> {
           isPop: false,
           isTwoButton: true,
           firstBtnTitle: 'No',
-          secondBtnTitle: 'Yes',secondBtnAction: (){
-           //pop to login screen
-        Navigator.of(context).pushNamedAndRemoveUntil('/dashboard', (Route<dynamic> route) => false);
-        //Navigator.popUntil(context, ModalRoute.withName('/login'));
-      },firstBtnAction: (){
-        setState(() {
-          _selectedMenuItem = _previousSelectedMenuIem;
-          _appBarTitle = _previousSelectedMenuIem.title;
-        });
-        Navigator.of(context).pop();
-      });
-    }
-    else{
+          secondBtnTitle: 'Yes',
+          secondBtnAction: () {
+            //pop to login screen
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                MainMenu.routeName, (Route<dynamic> route) => false);
+            //Navigator.popUntil(context, ModalRoute.withName('/login'));
+          },
+          firstBtnAction: () {
+            setState(() {
+              _selectedMenuItem = _previousSelectedMenuIem;
+              _appBarTitle = _previousSelectedMenuIem.title;
+            });
+            Navigator.of(context).pop();
+          });
+    } else {
       Navigator.of(context).pop();
     }
-
   }
 
   List<MenuItem> createMenuList() {

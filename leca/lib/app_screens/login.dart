@@ -3,19 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:leca/models/serialize/login_serialize.dart';
 import 'package:leca/app_screens/forgotpassword.dart';
+import 'package:leca/app_screens/mainmenu.dart';
 import 'package:leca/utils/constants.dart';
 import 'package:leca/app_screens/mainmenu.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class Login extends StatefulWidget {
+  static const routeName = '/login';
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return __LoginState();
+    return _LoginState();
   }
 }
 
-class __LoginState extends State<Login> {
+class _LoginState extends State<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   TextEditingController _emailTextEditController = TextEditingController();
@@ -43,6 +46,23 @@ class __LoginState extends State<Login> {
     TextStyle textStyle = Theme.of(context).textTheme.title;
     double screenWidth = MediaQuery.of(context).size.width;
 
+    _navigateToForgotPasswordScreen() {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (BuildContext context) {
+        return ForgotPassword();
+      }));
+    }
+
+    _navigateToDashborad() {
+      //Using push named
+      Navigator.pushNamed(context, MainMenu.routeName);
+
+      //Using normal material page route
+//    Navigator.push(context, MaterialPageRoute(builder: (context) {
+//      return MainMenu();
+//    }));
+    }
+
     _callLoginWS() async {
       try {
         final loginResponse = await Login_Model.fetchLoginData(
@@ -57,16 +77,14 @@ class __LoginState extends State<Login> {
             _isLoading = false;
           });
 
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return MainMenu();
-          }));
+          _navigateToDashborad();
         } else {
           setState(() {
             _isLoading = false;
           });
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return MainMenu();
-          }));
+
+          _navigateToDashborad();
+
           Constants.showAlert(
               title: Constants.AppName,
               context: context,
@@ -76,21 +94,14 @@ class __LoginState extends State<Login> {
         setState(() {
           _isLoading = false;
         });
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return MainMenu();
-        }));
+
+        _navigateToDashborad();
+
         Constants.showAlert(
             title: Constants.AppName,
             context: context,
             message: error.toString());
       }
-    }
-
-    _moveToForgotPasswordScreen() {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (BuildContext context) {
-        return ForgotPassword();
-      }));
     }
 
     // TODO: implement build
@@ -224,7 +235,7 @@ class __LoginState extends State<Login> {
                               onTap: () {
                                 setState(() {
                                   print('forgot button tapped');
-                                  _moveToForgotPasswordScreen();
+                                  _navigateToForgotPasswordScreen();
                                 });
                               },
                             )),

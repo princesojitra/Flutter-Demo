@@ -6,6 +6,9 @@ import 'package:leca/utils/constants.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class ForgotPassword extends StatefulWidget {
+
+  static const routeName = '/forgotpassword';
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState

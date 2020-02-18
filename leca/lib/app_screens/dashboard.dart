@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:leca/utils/sidemenu.dart';
 
 class Dashboard extends StatefulWidget {
+
+  static const routeName = '/dashboard';
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState

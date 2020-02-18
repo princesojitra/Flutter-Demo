@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:leca/app_screens/dashboard.dart';
+import 'package:leca/app_screens/forgotpassword.dart';
+import 'package:leca/app_screens/mainmenu.dart';
+import 'package:leca/app_screens/notifications.dart';
 import 'package:leca/app_screens/login.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'models/serialize/login_serialize.dart';
@@ -7,6 +10,7 @@ import 'dart:async';
 import 'utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+
 void main() async {
   Widget _defaultHome = new Login();
 
@@ -49,7 +53,7 @@ class LecaApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'LECA',
       theme: ThemeData(
-        accentColor: Colors.lightGreen,
+          accentColor: Colors.lightGreen,
           primaryColor: Colors.lightGreen,
           backgroundColor: Colors.white,
           scaffoldBackgroundColor: Colors.white,
@@ -63,10 +67,14 @@ class LecaApp extends StatelessWidget {
                       fontWeight: FontWeight.bold)),
               iconTheme: IconThemeData(color: Colors.white))),
       home: Scaffold(body: defaultHome),
+//      initialRoute: Login.routeName,
       routes: <String, WidgetBuilder>{
         // Set routes for using the Navigator.
-        '/login': (BuildContext context) => new Login(),
-        '/dashboard': (BuildContext context) => new Dashboard()
+        Login.routeName: (BuildContext context) => new Login(),
+        MainMenu.routeName: (BuildContext context) => new MainMenu(),
+        Dashboard.routeName: (BuildContext context) => new Dashboard(),
+        ForgotPassword.routeName: (BuildContext context) => new ForgotPassword(),
+        NotificationList.routeName: (BuildContext context) => new NotificationList()
       },
     );
   }
